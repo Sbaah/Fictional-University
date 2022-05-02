@@ -6,10 +6,10 @@ class MyNotes {
   }
 
   events() {
-    $(".delete-note").on("click", this.deleteNote);
-    $(".edit-note").on("click", this.editNote.bind(this));
-    $(".update-note").on("click", this.updateNote.bind(this));
-    $(".submit-note").on("click", this.createNote.bind(this))
+    $("#my-notes").on("click", ".delete-note", this.deleteNote);
+    $("#my-notes").on("click", ".edit-note", this.editNote.bind(this));
+    $("#my-notes").on("click", ".update-note", this.updateNote.bind(this));
+    $(".submit-note").on("click", this.createNote.bind(this));
   }
 
   // Methods will go here
@@ -51,6 +51,9 @@ class MyNotes {
             thisNote.slideUp();
           console.log("Congrats");
           console.log(response);
+          if (response.userNoteCount < 5) {
+            $(".note-limit-message").removeClass("active")
+          }
         },
         error: response => {
           console.log("Sorry");
@@ -117,10 +120,15 @@ class MyNotes {
           .hide()
           .slideDown()
 
-        console.log("Congrats")
-        console.log(response)
+        console.log("Congrats");
+        console.log(response);
+        
       },
       error: response => {
+        if(response.responseText === "You have reach your code limit"){
+          $('.note-limit-message').addClass('active');
+
+        }
         console.log("Sorry")
         console.log(response)
       }

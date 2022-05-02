@@ -6052,9 +6052,9 @@ class MyNotes {
   }
 
   events() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".delete-note").on("click", this.deleteNote);
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".edit-note").on("click", this.editNote.bind(this));
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".update-note").on("click", this.updateNote.bind(this));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".delete-note", this.deleteNote);
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".edit-note", this.editNote.bind(this));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".update-note", this.updateNote.bind(this));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(".submit-note").on("click", this.createNote.bind(this));
   } // Methods will go here
 
@@ -6096,6 +6096,10 @@ class MyNotes {
         thisNote.slideUp();
         console.log("Congrats");
         console.log(response);
+
+        if (response.userNoteCount < 5) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(".note-limit-message").removeClass("active");
+        }
       },
       error: response => {
         console.log("Sorry");
@@ -6159,6 +6163,10 @@ class MyNotes {
         console.log(response);
       },
       error: response => {
+        if (response.responseText === "You have reach your code limit") {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('.note-limit-message').addClass('active');
+        }
+
         console.log("Sorry");
         console.log(response);
       }
